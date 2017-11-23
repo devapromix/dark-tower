@@ -1,0 +1,15 @@
+function init(self)
+	msg.post("#camera", "acquire_camera_focus")
+
+    -- Track current position and where someone told us to look at.
+	self.pos = go.get_world_position()
+	self.look_at = self.pos
+end
+
+function on_message(self, message_id, message, sender)
+    -- This camera reacts to "look_at" messages with a position as where
+    -- to go.
+	if message_id == hash("look_at") then	
+		self.look_at = message.position
+	end
+end

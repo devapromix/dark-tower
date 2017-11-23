@@ -1,0 +1,37 @@
+function init(self)
+	msg.post("/camera/go#camera1", "look_at")
+	msg.post(".", "acquire_input_focus")
+end
+
+function update(self, dt)
+	msg.post("/camera/go#camera1", "look_at")
+	--print(go.get_position())
+end	
+
+function on_message(self, message_id, message, sender)
+	
+	if message_id == hash("up") then		
+		pos = go.get_position()
+		pos.y = pos.y + 16
+		go.set_position(pos)
+	end
+	
+	if message_id == hash("down") then
+		pos = go.get_position()
+		pos.y = pos.y - 16
+		go.set_position(pos)
+	end
+	
+	if message_id == hash("left") then
+		pos = go.get_position()
+		pos.x = pos.x - 16
+		go.set_position(pos)
+	end
+	
+	if message_id == hash("right") then
+		pos = go.get_position()
+		pos.x = pos.x + 16
+		go.set_position(pos)
+	end
+end
+	

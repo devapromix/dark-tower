@@ -1,7 +1,67 @@
 name: "main"
+collection_instances {
+  id: "GUI"
+  collection: "/GUI/GUI.collection"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "player"
+  collection: "/player/player.collection"
+  position {
+    x: 152.0
+    y: 88.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+collection_instances {
+  id: "camera"
+  collection: "/camera/camera.collection"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
-  id: "go"
+  id: "map"
   data: "components {\n"
   "  id: \"village\"\n"
   "  component: \"/locations/village/village.tilemap\"\n"
@@ -20,42 +80,7 @@ embedded_instances {
   ""
   position {
     x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-embedded_instances {
-  id: "player__in_village"
-  data: "components {\n"
-  "  id: \"player_vil\"\n"
-  "  component: \"/player/player_vil.sprite\"\n"
-  "  position {\n"
-  "    x: 24.0\n"
-  "    y: 64.0\n"
-  "    z: 1.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "}\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
+    y: 80.0
     z: 0.0
   }
   rotation {
