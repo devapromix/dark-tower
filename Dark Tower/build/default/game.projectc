@@ -1,6 +1,7 @@
 [project]
-title = My project
+title = Black Tower
 version = 0.1
+compress_archive = 0
 
 [bootstrap]
 main_collection = /main/main.collectionc
