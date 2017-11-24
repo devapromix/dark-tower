@@ -9,11 +9,13 @@ main_collection = /main/main.collectionc
 [input]
 game_binding = /input/game.input_bindingc
 use_accelerometer = 0
+repeat_delay = 0.5
+repeat_interval = 0.2
 
 [display]
 width = 160
 height = 216
-update_frequency = 30
+update_frequency = 10
 high_dpi = 0
 
 [physics]

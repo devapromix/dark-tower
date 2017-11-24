@@ -322,7 +322,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "\320\222\320\233\320\225\320\222\320\236"
+  text: "\320\262\320\273\320\265\320\262\320\276"
   font: "NotoMono"
   id: "text3"
   xanchor: XANCHOR_NONE

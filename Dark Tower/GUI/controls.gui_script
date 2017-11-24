@@ -3,7 +3,7 @@ function init(self)
 end
 
 function on_input(self, action_id, action)
-	if action_id == hash("click") and action.pressed or action_id == hash("touch") and action.pressed then
+	if action_id == hash("click") and action.pressed then --or action_id == hash("touch") and action.touch then
 		local btn_up = gui.get_node("btn8")
 		local btn_down = gui.get_node("btn2")
 		local btn_left = gui.get_node("btn4")
@@ -25,4 +25,5 @@ function on_input(self, action_id, action)
 			msg.post("/player/go#player", "right")
 		end
 	end
+	
 end
