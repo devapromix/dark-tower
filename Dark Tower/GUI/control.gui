@@ -763,7 +763,7 @@ nodes {
   }
   scale {
     x: 1.0
-    y: 0.8
+    y: 1.0
     z: 1.0
     w: 1.0
   }
@@ -784,7 +784,7 @@ nodes {
   texture: ""
   id: "black_background"
   xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
+  yanchor: YANCHOR_BOTTOM
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   layer: "background"

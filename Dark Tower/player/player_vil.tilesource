@@ -1,4 +1,4 @@
-image: "/main/images/player_vil.png"
+image: "/player/player_vil.png"
 tile_width: 16
 tile_height: 16
 tile_margin: 0
@@ -9,9 +9,9 @@ collision_groups: "default"
 animations {
   id: "anim"
   start_tile: 1
-  end_tile: 6
+  end_tile: 4
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 10
+  fps: 1
   flip_horizontal: 0
   flip_vertical: 0
 }
