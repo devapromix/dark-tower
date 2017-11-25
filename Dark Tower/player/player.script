@@ -27,12 +27,13 @@ function get_tile_id(current_map_url)
 	return tilemap.get_tile(current_map_url, "event_layer", (pos.x + 16) / 16, (pos.y - 64) / 16)
 end
 
-function canpass(tile_id)
-	tile = get_tile_id(current_map)
-	if  tile == tile.no_pass then
-		return false
+function can_pass(tile_id)
+	_tile = get_tile_id(current_map)
+	if  _tile == tile.no_pass then
+		return "cant_pass"
+	else
+		return "pass"
 	end
-	return true
 end
 
 function on_message(self, message_id, message, sender)
@@ -40,12 +41,15 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("up") then		
 		pos = go.get_position()
 		pos.y = pos.y + 16
-		if canpass(get_tile_id(current_map)) then 
-			go.set_position(pos)
+		print(get_tile_id(current_map))
+		if can_pass(get_tile_id(current_map)) ~= "cant_pass" then 
+			print("ok")
+			
 			msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
-		else 
-			pos.y = pos.y - 16
-		end
+		--else 
+		--	pos.y = pos.y - 16
+	end
+	go.set_position(pos)
 	end
 	
 	if message_id == hash("down") then
@@ -70,9 +74,9 @@ function on_message(self, message_id, message, sender)
 	end
 	
 	--Для тестирования
-	print(go.get_position())	
-	print(get_tile_id("/map#village"))
-	print(current_map)
-	print(tile.no_pass)
+	--print(go.get_position())	
+	--print(get_tile_id("/map#village"))
+	--print(current_map)
+	--print(tile.no_pass)
 end
 	
