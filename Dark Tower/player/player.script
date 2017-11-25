@@ -7,6 +7,12 @@ function update(self, dt)
 	--print(go.get_position())
 end	
 
+--Id тайла (в тайлсете) текущей карты, на котором находятся герои 
+function get_tile_id(current_map_url)
+	pos = go.get_position()
+	return tilemap.get_tile(current_map_url, "layer1", (pos.x + 16) / 16, (pos.y - 64) / 16)
+end
+
 function on_message(self, message_id, message, sender)
 	
 	if message_id == hash("up") then		
@@ -36,6 +42,8 @@ function on_message(self, message_id, message, sender)
 		go.set_position(pos)		
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
+	
 	print(go.get_position())
+	print(get_tile_id("/map#village"))
 end
 	
