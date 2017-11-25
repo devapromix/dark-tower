@@ -1,6 +1,20 @@
 function init(self)
-	msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
+	msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })	
 	msg.post(".", "acquire_input_focus")
+	
+	-- структура описывает тайлы к которым привязаны события
+	tile = {
+	no_pass = 737,
+	another_event = 738,	
+	}
+	-- структура хранит названия карт
+	map = {
+	village = "/map#village",
+	}
+	
+	current_map = map.village
+	print(current_map)
+	print(tile.no_pass)
 end
 
 function update(self, dt)	
@@ -10,7 +24,15 @@ end
 --Id тайла (в тайлсете) текущей карты, на котором находятся герои 
 function get_tile_id(current_map_url)
 	pos = go.get_position()
-	return tilemap.get_tile(current_map_url, "layer1", (pos.x + 16) / 16, (pos.y - 64) / 16)
+	return tilemap.get_tile(current_map_url, "event_layer", (pos.x + 16) / 16, (pos.y - 64) / 16)
+end
+
+function canpass(tile_id)
+	tile = get_tile_id(current_map)
+	if  tile == tile.no_pass then
+		return false
+	end
+	return true
 end
 
 function on_message(self, message_id, message, sender)
@@ -18,8 +40,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("up") then		
 		pos = go.get_position()
 		pos.y = pos.y + 16
-		go.set_position(pos)
-		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
+		if canpass(get_tile_id(current_map)) then 
+			go.set_position(pos)
+			msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
+		else 
+			pos.y = pos.y - 16
+		end
 	end
 	
 	if message_id == hash("down") then
@@ -43,8 +69,10 @@ function on_message(self, message_id, message, sender)
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
 	
-	print(go.get_position())
 	--Для тестирования
+	print(go.get_position())	
 	print(get_tile_id("/map#village"))
+	print(current_map)
+	print(tile.no_pass)
 end
 	
