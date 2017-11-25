@@ -2807,7 +2807,7 @@ layers {
 layers {
   id: "event_layer"
   z: 1.0
-  is_visible: 1
+  is_visible: 0
   cell {
     x: 0
     y: -1

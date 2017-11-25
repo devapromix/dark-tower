@@ -4,12 +4,12 @@ function init(self)
 	
 	-- структура описывает тайлы к которым привязаны события
 	tile = {
-	no_pass = 737,
-	another_event = 738,	
+		no_pass = 737,
+		another_event = 738,	
 	}
 	-- структура хранит названия карт
 	map = {
-	village = "/map#village",
+		village = "/map#village",
 	}
 	
 	current_map = map.village
@@ -30,48 +30,51 @@ end
 function can_pass(tile_id)
 	_tile = get_tile_id(current_map)
 	if  _tile == tile.no_pass then
-		return "cant_pass"
+		return false
 	else
-		return "pass"
+		return true
 	end
 end
 
 function on_message(self, message_id, message, sender)
+
+	old_position = go.get_position()	
 	
 	if message_id == hash("up") then		
 		pos = go.get_position()
 		pos.y = pos.y + 16
-		print(get_tile_id(current_map))
-		if can_pass(get_tile_id(current_map)) ~= "cant_pass" then 
-			print("ok")
-			
-			msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
-		--else 
-		--	pos.y = pos.y - 16
-	end
-	go.set_position(pos)
-	end
+		go.set_position(pos)		
+		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })		
+	end	
 	
 	if message_id == hash("down") then
 		pos = go.get_position()
 		pos.y = pos.y - 16
-		go.set_position(pos)
+		go.set_position(pos)		
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
 	
 	if message_id == hash("left") then
 		pos = go.get_position()
+		sprite.set_hflip("/player/go#player_vil", true)
 		pos.x = pos.x - 16
-		go.set_position(pos)
+		go.set_position(pos)		
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
 	
 	if message_id == hash("right") then
 		pos = go.get_position()
+		sprite.set_hflip("/player/go#player_vil", false)
 		pos.x = pos.x + 16
-		go.set_position(pos)		
+		go.set_position(pos)				
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
+	
+	-- проверка, стоит ли игрок на разрешенном месте, если нет, то возвращается на последнее известное
+	if can_pass(get_tile_id(current_map)) ~= true then 
+		go.set_position(old_position)
+		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
+	end			
 	
 	--Для тестирования
 	--print(go.get_position())	
