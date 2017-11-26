@@ -2,31 +2,44 @@ function init(self)
 	msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })	
 	msg.post(".", "acquire_input_focus")
 	
-	-- структура описывает тайлы к которым привязаны события
+	-- Тайлы событий (их id)
 	tile = {
 		no_pass = 737,
-		another_event = 738,	
-	}
-	-- структура хранит названия карт
-	map = {
-		village = "/map#village",
+		another_event = 738,
+		door1 = 739,	
+		door2 = 740,	
+		door3 = 741,	
+		door4 = 742,	
+		gate = 743,	
 	}
 	
+	-- Названия карт (их url)
+	map = {
+		village = "/map#village",
+		--level1 = "/map#level1",
+		--level2 = "/map#level2",
+		--level3 = "/map#level3",
+	}
+	
+	-- Текущая карта
 	current_map = map.village
-	print(current_map)
-	print(tile.no_pass)
+	
+	-- Для теста
+	--print(current_map)
+	--print(tile.no_pass)
 end
 
 function update(self, dt)	
 	--print(go.get_position())
 end	
 
---Id тайла (в тайлсете) текущей карты, на котором находятся герои 
+-- Id тайла (в тайлсете) текущей карты, на котором находятся герои 
 function get_tile_id(current_map_url)
 	pos = go.get_position()
 	return tilemap.get_tile(current_map_url, "event_layer", (pos.x + 16) / 16, (pos.y - 64) / 16)
 end
 
+-- Проходим ли тайл
 function can_pass(tile_id)
 	_tile = get_tile_id(current_map)
 	if  _tile == tile.no_pass then
@@ -40,9 +53,24 @@ function on_message(self, message_id, message, sender)
 
 	old_position = go.get_position()	
 	
-	--действия по нажатию центральной кнопки
+	-- Действия по нажатию центральной кнопки
 	if message_id == hash("center") then
-		print("center action")
+		-- Двери магазинов и врата в башню в деревне
+		if get_tile_id(current_map) == tile.door1 then
+			msg.post("/map#village_scr", "open_door1")
+		end
+		if get_tile_id(current_map) == tile.door2 then
+			msg.post("/map#village_scr", "open_door2")
+		end
+		if get_tile_id(current_map) == tile.door3 then
+			msg.post("/map#village_scr", "open_door3")
+		end
+		if get_tile_id(current_map) == tile.door4 then
+			msg.post("/map#village_scr", "open_door4")
+		end
+		if get_tile_id(current_map) == tile.gate then
+			msg.post("/map#village_scr", "open_gate")
+		end
 	end
 
 	if message_id == hash("up") then
@@ -75,13 +103,13 @@ function on_message(self, message_id, message, sender)
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
 	
-	-- проверка, стоит ли игрок на разрешенном месте, если нет, то возвращается на последнее известное
+	-- Проверка, стоит ли игрок на разрешенном месте, если нет, то возвращается на последнее известное
 	if not can_pass(get_tile_id(current_map)) then
 		go.set_position(old_position)
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end			
 	
-	--Для тестирования
+	-- Для тестирования
 	--print(go.get_position())	
 	--print(get_tile_id("/map#village"))
 	--print(current_map)
