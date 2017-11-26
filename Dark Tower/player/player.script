@@ -71,32 +71,6 @@ function on_message(self, message_id, message, sender)
 
 	old_position = go.get_position()	
 	
-	-- Действия по нажатию центральной кнопки
-	if message_id == hash("center") then
-		--Закрыть обычную дверь
-		if get_tile_id(current_map, layer.map) == tile.map.odoor then
-			set_tile_id(current_map, layer.map, tile.map.cdoor)
-			set_tile_id(current_map, layer.event, tile.no_pass_event)
-			print("Дверь закрыта.")			
-		end
-		-- Двери магазинов и врата в башню в деревне
-		if get_tile_id(current_map, layer.event) == tile.door1_event then
-			msg.post("/map#village_scr", "open_door1")
-		end
-		if get_tile_id(current_map, layer.event) == tile.door2_event then
-			msg.post("/map#village_scr", "open_door2")
-		end
-		if get_tile_id(current_map, layer.event) == tile.door3_event then
-			msg.post("/map#village_scr", "open_door3")
-		end
-		if get_tile_id(current_map, layer.event) == tile.door4_event then
-			msg.post("/map#village_scr", "open_door4")
-		end
-		if get_tile_id(current_map, layer.event) == tile.gate_event then
-			msg.post("/map#village_scr", "open_gate")
-		end
-	end
-
 	if message_id == hash("up") then
 		pos = go.get_position()
 		pos.y = pos.y + 16
@@ -140,6 +114,32 @@ function on_message(self, message_id, message, sender)
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end			
 	
+	-- Действия по нажатию центральной кнопки
+	if message_id == hash("center") then
+		--Закрыть обычную дверь
+		if get_tile_id(current_map, layer.map) == tile.map.odoor then
+			set_tile_id(current_map, layer.map, tile.map.cdoor)
+			set_tile_id(current_map, layer.event, tile.no_pass_event)
+			print("Дверь закрыта.")			
+		end
+		-- Двери магазинов и врата в башню в деревне
+		if get_tile_id(current_map, layer.event) == tile.door1_event then
+			msg.post("/map#village_scr", "open_door1")
+		end
+		if get_tile_id(current_map, layer.event) == tile.door2_event then
+			msg.post("/map#village_scr", "open_door2")
+		end
+		if get_tile_id(current_map, layer.event) == tile.door3_event then
+			msg.post("/map#village_scr", "open_door3")
+		end
+		if get_tile_id(current_map, layer.event) == tile.door4_event then
+			msg.post("/map#village_scr", "open_door4")
+		end
+		if get_tile_id(current_map, layer.event) == tile.gate_event then
+			msg.post("/map#village_scr", "open_gate")
+		end
+	end
+
 	-- Для тестирования
 	--print(go.get_position())	
 	--print(get_tile_id("/map#village"))
