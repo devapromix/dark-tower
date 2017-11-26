@@ -4,6 +4,9 @@ function init(self)
 	
 	-- Тайлы событий (их id)
 	tile = {
+		empty = 0, -- Пустота
+		odoor = 123, -- Открытая дверь
+		cdoor = 126, -- Закрытая дверь
 		no_pass = 737,
 		another_event = 738,
 		door1 = 739,	
@@ -21,6 +24,12 @@ function init(self)
 		--level3 = "/map#level3",
 	}
 	
+	-- Названия слоев карты
+	layer = {
+		map = "map_layer",
+		event = "event_layer",
+	}
+	
 	-- Текущая карта
 	current_map = map.village
 	
@@ -33,15 +42,21 @@ function update(self, dt)
 	--print(go.get_position())
 end	
 
--- Id тайла (в тайлсете) текущей карты, на котором находятся герои 
-function get_tile_id(current_map_url)
+-- Id тайла карты, на котором находятся герои 
+function get_tile_id(current_map_url, current_layer)
 	pos = go.get_position()
-	return tilemap.get_tile(current_map_url, "event_layer", (pos.x + 16) / 16, (pos.y - 64) / 16)
+	return tilemap.get_tile(current_map_url, current_layer, (pos.x + 16) / 16, (pos.y - 64) / 16)
+end
+
+-- Изменить id тайлa карты, на котором находятся герои
+function set_tile_id(current_map_url, current_layer, tile_id)
+	pos = go.get_position()
+	tilemap.set_tile(current_map, current_layer, (pos.x + 16) / 16, (pos.y - 64) / 16, tile_id)
 end
 
 -- Проходим ли тайл
 function can_pass(tile_id)
-	_tile = get_tile_id(current_map)
+	_tile = get_tile_id(current_map, layer.event)
 	if  _tile == tile.no_pass then
 		return false
 	else
@@ -56,19 +71,19 @@ function on_message(self, message_id, message, sender)
 	-- Действия по нажатию центральной кнопки
 	if message_id == hash("center") then
 		-- Двери магазинов и врата в башню в деревне
-		if get_tile_id(current_map) == tile.door1 then
+		if get_tile_id(current_map, layer.event) == tile.door1 then
 			msg.post("/map#village_scr", "open_door1")
 		end
-		if get_tile_id(current_map) == tile.door2 then
+		if get_tile_id(current_map, layer.event) == tile.door2 then
 			msg.post("/map#village_scr", "open_door2")
 		end
-		if get_tile_id(current_map) == tile.door3 then
+		if get_tile_id(current_map, layer.event) == tile.door3 then
 			msg.post("/map#village_scr", "open_door3")
 		end
-		if get_tile_id(current_map) == tile.door4 then
+		if get_tile_id(current_map, layer.event) == tile.door4 then
 			msg.post("/map#village_scr", "open_door4")
 		end
-		if get_tile_id(current_map) == tile.gate then
+		if get_tile_id(current_map, layer.event) == tile.gate then
 			msg.post("/map#village_scr", "open_gate")
 		end
 	end
@@ -103,8 +118,15 @@ function on_message(self, message_id, message, sender)
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
 	
+	-- Открытие обычных дверей
+	if not can_pass(get_tile_id(current_map, layer.event)) and get_tile_id(current_map, layer.map) == tile.cdoor then
+		set_tile_id(current_map, layer.map, tile.odoor)
+		set_tile_id(current_map, layer.event, tile.empty)
+		print("Дверь открыта.")
+	end
+	
 	-- Проверка, стоит ли игрок на разрешенном месте, если нет, то возвращается на последнее известное
-	if not can_pass(get_tile_id(current_map)) then
+	if not can_pass(get_tile_id(current_map, layer.event)) then
 		go.set_position(old_position)
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end			
