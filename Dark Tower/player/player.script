@@ -112,11 +112,10 @@ function on_message(self, message_id, message, sender)
 		msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })
 	end
 	
-	-- Открытие обычных дверей
+	-- Открытие обычных дверей автоматически
 	if not can_pass(get_tile_id(current_map, layer.event)) and get_tile_id(current_map, layer.map) == tile.map.cdoor then
 		set_tile_id(current_map, layer.map, tile.map.odoor)
 		set_tile_id(current_map, layer.event, tile.event.empty)
-		print("Дверь открыта.")
 	end
 	
 	-- Проверка, стоит ли игрок на разрешенном месте, если нет, то возвращается на последнее известное
@@ -127,11 +126,10 @@ function on_message(self, message_id, message, sender)
 	
 	-- Действия на карте по нажатию центральной кнопки
 	if message_id == hash("center") then
-		--Закрыть обычную дверь
+		--Закрыть обычную дверь кнопкой
 		if get_tile_id(current_map, layer.map) == tile.map.odoor then
 			set_tile_id(current_map, layer.map, tile.map.cdoor)
-			set_tile_id(current_map, layer.event, tile.event.no_pass)
-			print("Дверь закрыта.")			
+			set_tile_id(current_map, layer.event, tile.event.no_pass)			
 		end
 		-- Двери магазинов и врата в башню в деревне
 		if get_tile_id(current_map, layer.event) == tile.event.door1 then
@@ -151,7 +149,20 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 	
-	msg.post("/GUI/go#control", "move")
+	-- Надписи на кнопке #5 сменяются во время движения партии
+	-- Войти в дом или башню
+	if get_tile_id(current_map, layer.event) == tile.event.door1 or
+		get_tile_id(current_map, layer.event) == tile.event.door2 or
+		get_tile_id(current_map, layer.event) == tile.event.door3 or
+		get_tile_id(current_map, layer.event) == tile.event.door4 or
+		get_tile_id(current_map, layer.event) == tile.event.gate then
+		msg.post("/GUI/go#control", "change_button_text", {text5="войти"})
+	-- Закрыть дверь
+	elseif get_tile_id(current_map, layer.map) == tile.map.odoor then
+		msg.post("/GUI/go#control", "change_button_text", {text5="закрыть"})
+	else
+		msg.post("/GUI/go#control", "change_button_text", {text5=""})
+	end
 	-- Для тестирования
 	--print(go.get_position())	
 	--print(get_tile_id("/map#village"))
