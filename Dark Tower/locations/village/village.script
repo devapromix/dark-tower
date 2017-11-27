@@ -1,47 +1,47 @@
-function init(self)
-	-- Add initialization code here
-	-- Remove this function if not needed
-end
-
-function final(self)
-	-- Add finalization code here
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
-	-- Remove this function if not needed
-end
-
 function on_message(self, message_id, message, sender)
 	-- Магазин #1
 	if message_id == hash("open_door1") then
-		print("Знахарка Энвина")
+		if message["action"] == "enter" then
+			-- Вход в здание
+			print("Знахарка Энвина")
+		else
+			-- Надпись на табличке
+			print("Лучшие эликсиры и зелья")
+		end
 	end
 	-- Магазин #2
 	if message_id == hash("open_door2") then
-		print("Бронник Танос")
+		if message["action"] == "enter" then
+			-- Вход в здание
+			print("Бронник Танос")
+		else
+			-- Надпись на табличке
+			print("Уникальные брони от Таноса")
+		end
 	end
 	-- Магазин #3
 	if message_id == hash("open_door3") then
-		print("Магическая лавка Алвина")
+		if message["action"] == "enter" then
+			-- Вход в здание
+			print("Магическая лавка Алвина")
+		else
+			-- Надпись на табличке
+			print("Магические эликсиры, свитки и жезлы")
+		end
 	end
 	-- Магазин #4
 	if message_id == hash("open_door4") then
-		print("Оружейник Ормас")
+		if message["action"] == "enter" then
+			-- Вход в здание
+			print("Оружейник Ормас")
+		else
+			-- Надпись на табличке
+			print("Все лучшее оружие только у меня!")
+		end
 	end
-	-- Врата в башню
+	-- Башня
 	if message_id == hash("open_gate") then
+		-- Вход в здание
 		print("Вход в Темную Башню")
 	end
-end
-
-function on_input(self, action_id, action)
-	-- Add input-handling code here
-	-- Remove this function if not needed
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Remove this function if not needed
 end
