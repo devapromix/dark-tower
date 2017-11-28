@@ -3,10 +3,17 @@ function init(self)
 end
 
 function on_message(self, message_id, message, sender)
+	-- Позиция партии на карте
 	local x = math.floor((pos.x + 16) / 16)
 	local y = math.floor((pos.y - 64) / 16)
+	
+	-- Надписи на кнопках
 	if message_id == hash("change_button_text") then
-		gui.set_text(gui.get_node("text5"), message["text5"])
+		for i = 1,9 do
+			if message["text"..i] ~= nil then
+				gui.set_text(gui.get_node("text"..i), message["text"..i])
+			end
+		end
 	end
 end
 
