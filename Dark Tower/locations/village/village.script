@@ -1,3 +1,6 @@
+require "common"
+require "player/player_utils"
+
 function on_message(self, message_id, message, sender)
 	-- Магазин #1
 	if message_id == hash("open_door1") then
