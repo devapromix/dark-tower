@@ -1,5 +1,6 @@
 require "common"
 require "player/player_utils"
+require "party/party"
 
 function init(self)
 	msg.post("/camera/go#camera1", "look_at", { pos = go.get_position() })	
