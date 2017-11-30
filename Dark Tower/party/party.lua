@@ -1,48 +1,94 @@
+-- Все герои, которых можно выбрать себе в партию.
+-- Партия состоит из 3-х героев и одного на всех инвентаря.
+
 require "party/common"
 require "party/inventory"
 
--- Герои
+-- Герои для выбора в партию
 heroes = {
-	-- Кол-во героев на выбор
-	amount = 7,
-	-- Имя
-	name =         {"Грогнар", "Сир Тавор", "Хартан", "Сорен",  "Фальмиор",  "Тилия",    "Шенна",},
-	-- Класс
-	class =        {"варвар",  "рыцарь",    "вор",    "лучник", "волшебник", "амазонка", "колдунья",},
-	-- Сила
-	strength =     {10,        8,           4,        6,        3,           7,          4,},
-	-- Ловкость
-	accuracy =     {2,         5,           10,       9,        5,           10,         6,},
-	-- Здоровье
-	hit_points =   {14,        12,          8,        10,       7,           11,         9,},
+	-- Грогнар-варвар #1
+	{
+		-- Имя
+		name = "Грогнар",
+		-- Класс
+		class= "варвар",
+		-- Сила
+		strength = 10,
+		-- Ловкость
+		accuracy = 3,
+		-- Здоровье
+		hit_points = 14,
+	},
+	-- Сир Тавор #2
+	{
+		name = "Сир Тавор",
+		class= "рыцарь",
+		strength = 8,
+		accuracy = 5,
+		hit_points = 12,
+	},
+	-- Вор Хартан #3
+	{
+		name = "Хартан",
+		class= "вор",
+		strength = 4,
+		accuracy = 10,
+		hit_points = 8,
+	},
+	-- Сорен #4
+	{
+		name = "Сорен",
+		class= "лучник",
+		strength = 6,
+		accuracy = 9,
+		hit_points = 10,
+	},
+	-- Фальмиор #5
+	{
+		name = "Фальмиор",
+		class= "волшебник",
+		strength = 3,
+		accuracy = 5,
+		hit_points = 7,
+	},
+	-- Тилия #6
+	{
+		name = "Тилия",
+		class= "амазонка",
+		strength = 7,
+		accuracy = 10,
+		hit_points = 11,
+	},
+	-- Шенна #7
+	{
+		name = "Шенна",
+		class= "колдунья",
+		strength = 4,
+		accuracy = 6,
+		hit_points = 9,
+	},
 }
 
 -- Партия
 party = {
 	-- Кол-во героев в партии
 	amount = 0,
-	-- Имя
-	name = {},
-	-- Уровень
-	level = {},
-	-- Класс
-	class = {},
-	-- Сила
-	strength = {},
-	-- Ловкость
-	accuracy = {},
-	-- Здоровье (Хиты)
-	min_hp = {},
-	max_hp = {},
+	-- Инвентарь
+	inventory = {},
+	-- Текущая карта
+	current_map = "",
+	-- Герои
+	{1}, {2}, {3},
 }
 
 -- Добавить героя в партию
-function add_hero_to_party(i)
+-- id - номер героя в массиве heroes
+function party:add_hero(id)
 	-- Проверка на уникальность
 	f = true
 	if party.amount > 0 then
 		for j = 1,party.amount do
-			if party.name[j] == heroes.name[i] then
+			if party[j].name == heroes[id].name then
 				f = false
 				break
 			end
@@ -50,25 +96,32 @@ function add_hero_to_party(i)
 	end
 	-- Добавляем нового героя в партию
 	if f and party.amount < 3 then
-		party.amount = party.amount + 1
 		-- Новый герой в партии
-		party.name[party.amount] = heroes.name[i]
-		party.level[party.amount] = 1
-		party.class[party.amount] = heroes.class[i]
-		party.strength[party.amount] = heroes.strength[i]
-		party.accuracy[party.amount] = heroes.accuracy[i]
+		party.amount = party.amount + 1
+		-- Сохраняем id героя
+		party[party.amount].id = id
+		-- Имя
+		party[party.amount].name = heroes[id].name
+		-- Уровень
+		party[party.amount].level = 1
+		-- Класс
+		party[party.amount].class = heroes[id].class
+		-- Сила
+		party[party.amount].strength = heroes[id].strength
+		-- Ловкость
+		party[party.amount].accuracy = heroes[id].accuracy
 		-- Здоровье
-		party.min_hp[party.amount] = heroes.hit_points[i]
-		party.max_hp[party.amount] = heroes.hit_points[i]
+		party[party.amount].min_hp = heroes[id].hit_points
+		party[party.amount].max_hp = heroes[id].hit_points
 	end
 end
 
 -- Тест
-add_hero_to_party(math.random(1, heroes.amount + 1))
-add_hero_to_party(math.random(1, heroes.amount + 1))
-add_hero_to_party(math.random(1, heroes.amount + 1))
+for i=1,3 do
+	party:add_hero(math.random(1, #heroes + 1))
+end
 
 print("Состав партии:")
 for i=1,party.amount do
-	print(party.name[i]..", "..party.class[i]..", уровень "..party.level[i])
+	print(party[i].name..", "..party[i].class..", уровень "..party[i].level)
 end
