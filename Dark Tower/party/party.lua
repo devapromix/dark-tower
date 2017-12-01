@@ -16,8 +16,14 @@ heroes = {
 		strength = 10,
 		-- Ловкость
 		accuracy = 3,
+		-- Телосложение
+		constitution = 3,
+		-- Интеллект
+		intelligence = 3,
 		-- Здоровье
 		hit_points = 14,
+		-- Мана
+		mana_points = 1,
 	},
 	-- Сир Тавор #2
 	{
@@ -25,7 +31,10 @@ heroes = {
 		class= "рыцарь",
 		strength = 8,
 		accuracy = 5,
+		constitution = 3,
+		intelligence = 3,
 		hit_points = 12,
+		mana_points = 5,
 	},
 	-- Вор Хартан #3
 	{
@@ -33,7 +42,10 @@ heroes = {
 		class= "вор",
 		strength = 4,
 		accuracy = 10,
+		constitution = 3,
+		intelligence = 3,
 		hit_points = 8,
+		mana_points = 6,
 	},
 	-- Сорен #4
 	{
@@ -41,7 +53,10 @@ heroes = {
 		class= "лучник",
 		strength = 6,
 		accuracy = 9,
+		constitution = 3,
+		intelligence = 3,
 		hit_points = 10,
+		mana_points = 4,
 	},
 	-- Фальмиор #5
 	{
@@ -49,7 +64,10 @@ heroes = {
 		class= "волшебник",
 		strength = 3,
 		accuracy = 5,
+		constitution = 3,
+		intelligence = 3,
 		hit_points = 7,
+		mana_points = 15,
 	},
 	-- Тилия #6
 	{
@@ -57,7 +75,10 @@ heroes = {
 		class= "амазонка",
 		strength = 7,
 		accuracy = 10,
+		constitution = 3,
+		intelligence = 3,
 		hit_points = 11,
+		mana_points = 3,
 	},
 	-- Шенна #7
 	{
@@ -65,7 +86,10 @@ heroes = {
 		class= "колдунья",
 		strength = 4,
 		accuracy = 6,
+		constitution = 3,
+		intelligence = 3,
 		hit_points = 9,
+		mana_points = 12,
 	},
 }
 
@@ -74,11 +98,16 @@ party = {
 	-- Кол-во героев в партии
 	amount = 0,
 	-- Инвентарь
-	inventory = {},
+	inventory = {
+		-- Золото
+		gold = 50,
+	},
 	-- Текущая карта
 	current_map = "",
 	-- Герои
 	{1}, {2}, {3},
+	-- Очки
+	score = 0,
 }
 
 -- Добавить героя в партию
@@ -104,15 +133,24 @@ function party:add_hero(id)
 		party[party.amount].name = heroes[id].name
 		-- Уровень
 		party[party.amount].level = 1
+		-- Опыт
+		party[party.amount].experience = 0
 		-- Класс
 		party[party.amount].class = heroes[id].class
 		-- Сила
 		party[party.amount].strength = heroes[id].strength
 		-- Ловкость
 		party[party.amount].accuracy = heroes[id].accuracy
+		-- Телосложение
+		party[party.amount].constitution = heroes[id].constitution
+		-- Интеллект
+		party[party.amount].intelligence = heroes[id].intelligence
 		-- Здоровье
 		party[party.amount].min_hp = heroes[id].hit_points
 		party[party.amount].max_hp = heroes[id].hit_points
+		-- Мана
+		party[party.amount].min_mp = heroes[id].mana_points
+		party[party.amount].max_mp = heroes[id].mana_points
 	end
 end
 
