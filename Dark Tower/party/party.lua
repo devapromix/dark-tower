@@ -129,6 +129,31 @@ function party:has_gold(value)
 	return r
 end
 
+--
+function party:add_item_to_inventory(item_id)
+
+end
+
+--
+function party:use_item(item_id)
+
+end
+
+--
+function party:equip_item(char_id, item_id)
+
+end
+
+--
+function party:unequip_item(char_id, item_id)
+
+end
+
+--
+function party:remove_item_from_inventory(item_id)
+
+end
+
 -- Сколько опыта нужно накопить до след. уровня
 function party:xp_to_next_level(current_level)
 	return (current_level + 1) * 30
