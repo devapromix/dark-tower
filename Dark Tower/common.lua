@@ -26,7 +26,8 @@ tile = {
 	
 -- Названия карт (их url)
 map = {
-	village = "/map#village",
+	--village = "village_col:/go#village1",
+	village = "/manager#village",	
 	level1 = "/map#level1",
 	level2 = "/map#level2",
 	level3 = "/map#level3",

@@ -1,7 +1,7 @@
-name: "main"
+name: "main_col"
 collection_instances {
-  id: "GUI"
-  collection: "/GUI/GUI.collection"
+  id: "camera"
+  collection: "/camera/camera.collection"
   position {
     x: 0.0
     y: 0.0
@@ -24,8 +24,8 @@ collection_instances {
   collection: "/player/player.collection"
   position {
     x: 152.0
-    y: 136.0
-    z: 1.0
+    y: 56.0
+    z: 0.0
   }
   rotation {
     x: 0.0
@@ -40,8 +40,8 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "camera"
-  collection: "/camera/camera.collection"
+  id: "GUI"
+  collection: "/GUI/in_game_control/GUI.collection"
   position {
     x: 0.0
     y: 0.0
@@ -61,10 +61,10 @@ collection_instances {
 }
 scale_along_z: 0
 embedded_instances {
-  id: "map"
+  id: "manager"
   data: "components {\n"
-  "  id: \"village\"\n"
-  "  component: \"/locations/village/village.tilemap\"\n"
+  "  id: \"manager\"\n"
+  "  component: \"/main/manager.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -77,9 +77,30 @@ embedded_instances {
   "    w: 1.0\n"
   "  }\n"
   "}\n"
-  "components {\n"
-  "  id: \"village_scr\"\n"
-  "  component: \"/locations/village/village.script\"\n"
+  "embedded_components {\n"
+  "  id: \"main_menu\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/GUI/main_menu/main_menu.collection\\\"\\n"
+  "exclude: false\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"village\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/locations/village/village.collection\\\"\\n"
+  "exclude: false\\n"
+  "\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -95,7 +116,7 @@ embedded_instances {
   ""
   position {
     x: 0.0
-    y: 80.0
+    y: 0.0
     z: 0.0
   }
   rotation {

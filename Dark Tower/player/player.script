@@ -17,9 +17,9 @@ end
 -- Войти в дом или прочитать табличку
 local function do_msg_action(door_id)
 	if get_tile_id(current_map, layer.map) == tile.map.door then
-		msg.post("/map#village_scr", door_id, {action = "enter"})
+		msg.post("/manager#village", door_id, {action = "enter"})
 	else
-		msg.post("/map#village_scr", door_id, {action = "read"})
+		msg.post("/manager#village", door_id, {action = "read"})
 	end
 end
 
