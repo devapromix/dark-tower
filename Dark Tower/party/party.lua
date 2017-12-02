@@ -107,6 +107,8 @@ party = {
 	amount = 0,
 	-- Инвентарь
 	inventory = {
+		-- Размер инвентаря
+		max_size = 10,
 		-- Золото
 		gold = 50,
 	},
@@ -118,20 +120,29 @@ party = {
 	score = 0,
 }
 
+-- Есть ли у партии нужная сумма денег
+function party:has_gold(value)
+	r = false
+	if value >= 0 then
+		r = party.inventory.gold >= value
+	end
+	return r
+end
+
 -- Сколько опыта нужно накопить до след. уровня
-function party:next_level_exp(current_level)
+function party:xp_to_next_level(current_level)
 	return (current_level + 1) * 30
 end
 
 -- Добавляем опыт партии
 function party:add_exp(value)
-	if value > 0 then
+	if value > 0 and party.amount > 0 then
 		-- Опыт каждому герою партии
 		value = math.ceil(value / party.amount)
 		for i = 1, party.amount do
 			party[i].experience = party[i].experience + value
 			-- Если опыта больше, то новый уровень
-			if party[i].experience > party:next_level_exp(party[i].level) then
+			if party[i].experience > party:xp_to_next_level(party[i].level) then
 				party[i].level = party[i].level + 1
 			end
 		end
